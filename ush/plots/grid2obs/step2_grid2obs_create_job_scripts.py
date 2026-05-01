@@ -307,7 +307,7 @@ for pres_levs_job in list(make_plots_jobs_dict['grid2obs_upper_air'].keys()):
         pres_levs_job_line_type_stats
     )
     make_plots_jobs_dict['grid2obs_upper_air'][pres_levs_job]['plots'] =[
-        'time_series', 'lead_average','stat_by_level'
+        'time_series', 'lead_average','stat_by_level', 'lead_by_level'
     ]
 # sfc
 for sfc_job in list(make_plots_jobs_dict['grid2obs_conus_sfc'].keys()):
@@ -344,8 +344,6 @@ for case_type in case_type_list:
     model_plot_name_list = (
         os.environ[RUN_abbrev+'_model_plot_name_list'].split(' ')
     )
-    print("DEBUG: case_type =", case_type)
-    print("DEBUG: JOB_GROUP_dict keys =", list(JOB_GROUP_dict.keys()))
     case_type_plot_jobs_dict = JOB_GROUP_dict[f"grid2obs_{case_type}"]
     for case_type_job in list(case_type_plot_jobs_dict.keys()):
         # Initialize job environment dictionary
@@ -459,7 +457,7 @@ for case_type in case_type_list:
                     job.write('export '+name+'="'+value+'"\n')
                 job.write('\n')
                 job.write(
-                    vfg_util.python_g2o_command('grid2obs_plots.py',[])
+                    vfg_util.python_command('grid2obs', 'grid2obs_plots.py',[])
                     +'\n'
                 )
                 job.close()
@@ -594,7 +592,7 @@ for case_type in case_type_list:
                             job.write('export '+name+'="'+value+'"\n')
                         job.write('\n')
                         job.write(
-                            vfg_util.python_g2o_command('grid2obs_plots.py',[])
+                            vfg_util.python_command('grid2obs', 'grid2obs_plots.py',[])
                             +'\n'
                         )
                         job.close()
