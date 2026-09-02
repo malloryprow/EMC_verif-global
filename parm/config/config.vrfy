@@ -56,8 +56,8 @@ walltime=04:00:00
 #SENDARCH:               copy stat files to model_stat_dir directories
 #KEEPDATA:               keep run's run directory after job completion
 model_list=gfs
-model_dir_list=/lfs/h2/emc/vpppg/noscrub/mallory.row/verification/global/archive/model_data
-model_stat_dir_list=/lfs/h2/emc/vpppg/noscrub/mallory.row/archive
+model_dir_list=/lfs/h2/emc/vpppg/noscrub/emc.vpppg/verification/global/archive/model_data
+model_stat_dir_list=/lfs/h2/emc/vpppg/noscrub/$USER/archive
 model_file_format_list=pgbf{lead?fmt=%2H}.gfs.{init?fmt=%Y%m%d%H}.grib2
 tar_archive_dir=/lfs/h2/emc/ptmp/$USER/tar_plot_files
 model_data_run_hpss=NO
