@@ -455,7 +455,7 @@ if RUN == 'grid2grid_step1':
 elif RUN == 'grid2grid_step2':
     valid_config_var_values_dict[f"{RUN_abbrev}_scorecard_ci_method"] = ["EMC"]
     valid_config_var_values_dict[f"{RUN_abbrev}_scorecard_average_method"] = ["MEAN"]
-    valid_config_var_values_dict[f"{RUN_abbrev}_use_set_yaxis"] = ['True', 'False']
+    valid_config_var_values_dict[f"{RUN_abbrev}_use_set_yaxis"] = ['YES', 'NO']
     for RUN_type in RUN_type_list:
         RUN_abbrev_type = RUN_abbrev+'_'+RUN_type
         valid_config_var_values_dict[RUN_abbrev_type
@@ -471,7 +471,7 @@ elif RUN == 'grid2grid_step2':
                                      +'_gather_by_list'] = ['VALID', 'INIT',
                                                             'VSDB']
         valid_config_var_values_dict[RUN_abbrev_type
-                                     +'_event_eq'] = ['True', 'False']
+                                     +'_event_eq'] = ['YES', 'NO']
 elif RUN == 'grid2obs_step1':
     for RUN_type in RUN_type_list:
         RUN_abbrev_type = RUN_abbrev+'_'+RUN_type
@@ -507,7 +507,7 @@ elif RUN == 'grid2obs_step1':
     valid_config_var_values_dict[RUN_abbrev
                                  +'_prepbufr_data_run_hpss'] = ['YES', 'NO']
 elif RUN == 'grid2obs_step2':
-    valid_config_var_values_dict[f"{RUN_abbrev}_use_set_yaxis"] = ['True', 'False']
+    valid_config_var_values_dict[f"{RUN_abbrev}_use_set_yaxis"] = ['YES', 'NO']
     for RUN_type in RUN_type_list:
         RUN_abbrev_type = RUN_abbrev+'_'+RUN_type
         if RUN_type == 'polar_sfc':
@@ -541,7 +541,7 @@ elif RUN == 'grid2obs_step2':
                                      +'_gather_by_list'] = ['VALID', 'INIT',
                                                             'VSDB']
         valid_config_var_values_dict[RUN_abbrev_type
-                                     +'_event_eq'] = ['True', 'False']
+                                     +'_event_eq'] = ['YES', 'NO']
 elif RUN == 'precip_step1':
     for RUN_type in RUN_type_list:
         RUN_abbrev_type = RUN_abbrev+'_'+RUN_type
@@ -570,14 +570,14 @@ elif RUN == 'precip_step1':
     valid_config_var_values_dict[RUN_abbrev
                                  +'_obs_data_run_hpss'] = ['YES', 'NO']
 elif RUN == 'precip_step2':
-    valid_config_var_values_dict[f"{RUN_abbrev}_use_set_yaxis"] = ['True', 'False']
+    valid_config_var_values_dict[f"{RUN_abbrev}_use_set_yaxis"] = ['YES', 'NO']
     for RUN_type in RUN_type_list:
         RUN_abbrev_type = RUN_abbrev+'_'+RUN_type
         valid_config_var_values_dict[RUN_abbrev_type
                                      +'_gather_by_list'] = ['VALID', 'INIT',
                                                             'VSDB']
         valid_config_var_values_dict[RUN_abbrev_type
-                                     +'_event_eq'] = ['True', 'False']
+                                     +'_event_eq'] = ['YES', 'NO']
 elif RUN == 'satellite_step1':
     for RUN_type in RUN_type_list:
         RUN_abbrev_type = RUN_abbrev+'_'+RUN_type
@@ -588,14 +588,14 @@ elif RUN == 'satellite_step1':
                   +"must be <= 1")
             sys.exit(1)
 elif RUN == 'satellite_step2':
-    valid_config_var_values_dict[f"{RUN_abbrev}_use_set_yaxis"] = ['True', 'False']
+    valid_config_var_values_dict[f"{RUN_abbrev}_use_set_yaxis"] = ['YES', 'NO']
     for RUN_type in RUN_type_list:
         RUN_abbrev_type = RUN_abbrev+'_'+RUN_type
         valid_config_var_values_dict[RUN_abbrev_type
                                      +'_gather_by_list'] = ['VALID', 'INIT',
                                                             'VSDB']
         valid_config_var_values_dict[RUN_abbrev_type
-                                     +'_event_eq'] = ['True', 'False']
+                                     +'_event_eq'] = ['YES', 'NO']
         if float(os.environ[RUN_abbrev_type+'_sea_ice_thresh']) > 1:
             print("ERROR: value of "+RUN_abbrev_type+"_sea_ice_thresh "
                   +"must be <= 1")
