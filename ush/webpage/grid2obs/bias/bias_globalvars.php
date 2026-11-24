@@ -42,7 +42,7 @@
       $TotCloud_name = 'tcdc_total';
       $SeaLevPres_name = 'prmsl_z0';
       $VisSfc_name = 'vis_z0';
-      $CldCeiling_name = 'hgt_l0';
+      $CldCeiling_name = 'ceiling_l0';
       $CAPESfc_name = 'cape_l0';
       $HgtPBL_name = 'hpbl_l0';
       $GustSfc_name = 'gust_z0';

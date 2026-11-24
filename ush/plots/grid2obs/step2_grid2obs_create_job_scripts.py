@@ -179,7 +179,7 @@ base_plot_jobs_info_dict = {
         'HGTcldceil': {'vx_masks': ['G104','WEST', 'EAST', 'MDW', 'NPL', 'SPL', 'NEC',
                                     'SEC', 'NWC', 'SWC', 'NMT', 'SMT', 'SWD',
                                     'GRB', 'LMV', 'GMC', 'APL', 'NAK', 'SAK'],
-                            'fcst_var_dict': {'name': 'HGT',
+                            'fcst_var_dict': {'name': 'CEILING',
                                       'levels': ['L0']},
                              'obs_var_dict': {'name': 'HGT',
                                      'levels': ['L0']},

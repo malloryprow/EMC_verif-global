@@ -53,10 +53,7 @@ class PlotSpecs:
         self.legend_ncol = 1
         self.title_loc = 'center'
         self.fig_size=(16.,16.)
-        if self.plot_type in ['time_series',
-                              'time_series_multifhr',
-                              'long_term_time_series',
-                              'long_term_time_series_multifhr']:
+        if self.plot_type == 'time_series':
             self.fig_size = (16., 8.)
             self.fig_subplot_top = 0.87
             self.fig_subplot_bottom = 0.1
@@ -68,22 +65,7 @@ class PlotSpecs:
             self.legend_frame_on = False
             self.legend_bbox = (0.5, 0.05)
             self.legend_ncol = 4
-            if self.plot_type in ['time_series_multifhr',
-                                  'long_term_time_series',
-                                  'long_term_time_series_multifhr']:
-                self.fig_subplot_top = 0.85
-        elif self.plot_type == 'histogram':
-            self.fig_size = (16., 8.)
-            self.fig_subplot_top = 0.87
-            self.fig_subplot_bottom = 0.1
-            self.fig_subplot_right = 0.925
-            self.fig_subplot_left = 0.085
-            self.axis_label_size = 15
-            self.xtick_label_size = 15
-            self.ytick_label_size = 15
-        elif self.plot_type in ['lead_average', 'valid_hour_average',
-                                'threshold_average',
-                                'long_term_time_series_diff']:
+        elif self.plot_type == 'lead_average':
             self.fig_size = (16., 16.)
             self.fig_subplot_top = 0.9
             self.fig_subplot_bottom = 0.05
@@ -92,28 +74,7 @@ class PlotSpecs:
             self.legend_frame_on = False
             self.legend_bbox = (0.5, 0.05)
             self.legend_ncol = 5
-            self.fig_title_size = 18
-            if self.plot_type == 'long_term_time_series_diff':
-                self.legend_font_size = 15
-        elif self.plot_type in ['lead_by_date',
-                                'long_term_annual_mean',
-                                'long_term_lead_by_date']:
-            self.fig_size = (16., 16.)
-            self.axis_title_pad = 5
-            self.axis_title_loc = 'left'
-            self.fig_subplot_top = 0.9
-            self.fig_subplot_bottom = 0.075
-            self.fig_subplot_right = 0.923
-            self.fig_subplot_left = 0.15
-            self.fig_title_size = 18
-            if self.plot_type == 'long_term_annual_mean':
-                self.fig_subplot_left = 0.1
-                self.fig_subplot_right = 0.9
-            if self.plot_type == 'long_term_lead_by_date':
-                self.fig_subplot_left = 0.1
-            if self.plot_type == 'lead_by_date':
-                self.ytick_major_pad = 5
-                self.fig_subplot_left = 0.1575
+            self.legend_font_size = 15
         elif self.plot_type == 'stat_by_level':
             self.fig_size = (16., 16.)
             self.fig_subplot_top = 0.925
@@ -134,25 +95,6 @@ class PlotSpecs:
             self.fig_subplot_bottom = 0.025
             self.fig_subplot_right = 0.95
             self.fig_subplot_left = 0.1
-            self.fig_title_size = 18
-        elif self.plot_type in ['precip_spatial_map', 'nohrsc_spatial_map']:
-            self.fig_size = (8., 6.)
-            self.fig_title_size = 13
-            self.fig_subplot_right = 0.975
-            self.fig_subplot_left = 0.025
-            self.axis_label_size = 12
-            self.xtick_label_size = 12
-            self.axis_tick_size = 13
-        elif self.plot_type == 'performance_diagram':
-            self.fig_size = (16., 16.)
-            self.fig_subplot_top = 0.9
-            self.fig_subplot_bottom = 0.175
-            self.fig_subplot_right = 0.85
-            self.fig_subplot_left = 0.075
-            self.legend_frame_on = True
-            self.legend_loc = 'upper center'
-            self.legend_ncol = 5
-            self.legend_font_size = 16
             self.fig_title_size = 18
         else:
             self.logger.error(f"{self.plot_type} not recognized")
@@ -210,30 +152,9 @@ class PlotSpecs:
                                   (string)
         """
         stat_plot_name_dict = {
-            'ACC': 'Anomaly Correlation Coefficient',
-            'BIAS': 'Bias (Mean Error) [Fcst-Obs]',
-            'CORR': 'Pearson Correlation Coefficient',
-            'CSI': 'Critical Success Index',
-            'ETS': 'Equitable Threat Score',
-            'FBAR': 'Forecast Mean',
             'FBAR_OBAR': 'Forecast and Observation Mean',
-            'FBIAS': 'Frequency Bias',
-            'FSS': 'Fraction Skill Score',
-            'FY_OY': 'Forecast:Yes,Obs:Yes',
-            'GSS': 'Gilbert Skill Score',
-            'HSS': 'Heidke Skill Score',
             'ME': 'Mean Error (Bias) [Fcst-Obs]',
-            'OBAR': 'Observation Mean',
-            'POD': 'Probability of Detection',
-            'PERFDIAG': 'Performance Diagram',
             'RMSE': 'Root Mean Square Error',
-            'S1': 'S1 Score',
-            'SRATIO': 'Success Ratio (1-FAR)',
-            'STDEV_ERR': 'Standard Deviation of Error',
-            'MSESS': "Murphy's Mean Square Error Skill Score",
-            'RSD': 'Ratio of Standard Deviation',
-            'RMSE_MD': 'Root Mean Square Error from Mean Error',
-            'RMSE_PV': 'Root Mean Square Error from Pattern Variation'
         }
         if stat in list(stat_plot_name_dict.keys()):
             stat_plot_name = stat_plot_name_dict[stat]
@@ -257,10 +178,10 @@ class PlotSpecs:
         var_name_level = var_name+'/'+var_level
         var_plot_name_dict = {
             'CAPE/Z0': 'Surface Based CAPE',
+            'CEILING/L0': 'Cloud Ceiling',
             'RH/Z2' : '2m Relative Humidity',
             'DPT/Z2': '2m  Dewpoint Temperature',
             'GUST/Z0': 'Surface Wind Gust',
-            'HGT/L0': 'Cloud Ceiling',
             'HGT/all': 'Geopotential Height - All Levels',
             'HGT/trop': 'Geopotential Height - Troposphere',
             'HGT/ltrop': 'Geopotential Height - Lower Troposphere',
@@ -282,11 +203,7 @@ class PlotSpecs:
             'HGT/P850': '850 hPa Geopotential Height',
             'HGT/P925': '925 hPa Geopotential Height',
             'HGT/P1000': '1000 hPa Geopotential Height',
-            'HGT/TROPOPAUSE': 'Tropopause Geopotential Height',
-            'HGT/L0': 'Tropopause Geopotential Height',
             'HPBL/L0': 'Planetary Boundary Layer Height',
-            'PRES/TROPOPAUSE': 'Tropopause Pressure',
-            'PRES/L0': 'Tropopause Pressure',
             'PRES/Z0': 'Surface Pressure',
             'PRMSL/Z0': 'Pressure Reduced to MSL',
             'PWAT/L0': 'Precipitable Water',
@@ -356,8 +273,6 @@ class PlotSpecs:
             'TMP/P850': '850 hPa Temperature',
             'TMP/P925': '925 hPa Temperature',
             'TMP/P1000': '1000 hPa Temperature',
-            'TMP/TROPOPAUSE': 'Tropopause Temperature',
-            'TMP/L0': 'Tropopause Temperature',
             'TMP/Z2': '2 meter Temperature',
             'TMP/Z0': 'Surface Temperature',
             'UGRD/all': 'U-Component of Wind - All Levels',
@@ -447,18 +362,10 @@ class PlotSpecs:
                                  (string)
         """
         obs_plot_name_dict = {
-            'ecmwf': 'ECMWF Anl',
-            'gfs': 'GFS Anl',
-            'gfs_anl': "Model's Own Anl.",
-            '24hrCCPA': 'CCPA',
-            '24hrNOHRSC': 'NOHRSC',
-            'osi_saf': 'OSI-SAF',
-            'ghrsst_ospo': 'GHRSST-OSPO',
-            'ADPSFC': 'METARS',
-            'gfsv16': "Model's Own Anl.",
-            'gfsv16_anl': "Model's Own Anl.",
-            'gfsv17': "Model's Own Anl.",
-            'gfsv17_anl': "Model's Own Anl."
+            'ADPSFC': 'Surface Land Reports',
+            'ONLYSF': 'Surface Marine and Land Reports',
+            'ADPUPA': 'Upper Air Reports',
+            'IABP': 'IABP Buoys',
         }
         if ob_name in list(obs_plot_name_dict.keys()):
             obs_plot_name = obs_plot_name_dict[ob_name]
@@ -744,30 +651,19 @@ class PlotSpecs:
         )
         if self.plot_type == 'time_series':
             plot_type_savefig_name = 'timeseries'
-        elif self.plot_type == 'time_series_multifhr':
-            plot_type_savefig_name = 'timeseries'
         elif self.plot_type == 'lead_average':
             plot_type_savefig_name = 'fhrmean'
-        elif self.plot_type == 'lead_by_date':
-            plot_type_savefig_name = 'leaddate'
         elif self.plot_type == 'lead_by_level':
             plot_type_savefig_name = 'vertprof_fhrmean'
         elif self.plot_type == 'date_by_level':
             plot_type_savefig_name = 'vertprof_date'
-        elif self.plot_type == 'performance_diagram':
-            plot_type_savefig_name = 'perfdiag'
         elif self.plot_type == 'stat_by_level':
             plot_type_savefig_name = 'vertprof'
-        elif self.plot_type == 'threshold_average':
-            plot_type_savefig_name = 'threshmean'
-        elif self.plot_type == 'valid_hour_average':
-            plot_type_savefig_name = 'vhrmean'
         else:
             plot_type_savefig_name = self.plot_type.replace('_', '')
-        if self.plot_type in ['time_series', 'time_series_multifhr',
-                              'lead_average', 'stat_by_level', 'lead_by_level',
-                              'lead_by_date', 'date_by_level',
-                              'performance_diagram', 'threshold_average']:
+        if self.plot_type in ['time_series', 'lead_average',
+                              'stat_by_level', 'lead_by_level',
+                              'date_by_level']:
             plot_type_savefig_name = plot_type_savefig_name+'_valid'
             valid_hr = int(date_info_dict['valid_hr_start'])
             while valid_hr <= int(date_info_dict['valid_hr_end']):
@@ -781,12 +677,6 @@ class PlotSpecs:
             plot_type_savefig_name = (
                  plot_type_savefig_name+'_'
                  +'f'+date_info_dict['forecast_hour'].zfill(3)
-            )
-        elif self.plot_type == 'time_series_multifhr':
-            plot_type_savefig_name = (
-                 plot_type_savefig_name+'_'
-                 +''.join(['f'+f.zfill(3) for \
-                            f in date_info_dict['forecast_hours']])
             )
         grid_savefig_name = plot_info_dict['grid']
         region_savefig_dict = {
@@ -1152,98 +1042,5 @@ class PlotSpecs:
             'obs': {'color': '#aaaaaa',
                     'marker': 'None', 'markersize': 0,
                     'linestyle': 'solid', 'linewidth': 2},
-            'gfs': {'color': '#000000',
-                    'marker': 'o', 'markersize': 6,
-                    'linestyle': 'solid', 'linewidth': 3},
-            'gfsv16': {'color': '#000000',
-                    'marker': 'o', 'markersize': 6,
-                    'linestyle': 'solid', 'linewidth': 3},
-            'gfsv17': {'color': '#fb2020',
-                    'marker': 'o', 'markersize': 6,
-                    'linestyle': 'solid', 'linewidth': 3},
-            'gfs00Z': {'color': '#000000',
-                       'marker': 'o', 'markersize': 6,
-                       'linestyle': 'solid', 'linewidth': 3},
-            'gfs06Z': {'color': '#fb2020',
-                       'marker': '^', 'markersize': 7,
-                       'linestyle': 'solid', 'linewidth': 1.5},
-            'gfs12Z': {'color': '#1e3cff',
-                       'marker': 'X', 'markersize': 7,
-                       'linestyle': 'solid', 'linewidth': 1.5},
-            'gfs18Z': {'color': '#e69f00',
-                       'marker': 'o', 'markersize': 7,
-                       'linestyle': 'solid', 'linewidth': 1.5},
-            'cfs': {'color': '#56b4e9',
-                    'marker': 'o', 'markersize': 6,
-                    'linestyle': 'solid', 'linewidth': 1.5},
-            'cmc': {'color': '#1e3cff',
-                     'marker': 'X', 'markersize': 7,
-                     'linestyle': 'solid', 'linewidth': 1.5},
-            'cmc_regional': {'color': '#8400c8',
-                             'marker': 'D', 'markersize': 6,
-                             'linestyle': 'solid', 'linewidth': 1.5},
-            'dwd': {'color': '#56b4e9',
-                    'marker': 'o', 'markersize': 6,
-                    'linestyle': 'solid', 'linewidth': 1.5},
-            'ecmwf': {'color': '#fb2020',
-                      'marker': '^', 'markersize': 7,
-                      'linestyle': 'solid', 'linewidth': 1.5},
-            'fnmoc': {'color': '#00dc00',
-                      'marker': 'P', 'markersize': 7,
-                      'linestyle': 'solid', 'linewidth': 1.5},
-            'imd': {'color': '#8400c8',
-                    'marker': 'D', 'markersize': 6,
-                    'linestyle': 'solid', 'linewidth': 1.5},
-            'jma': {'color': '#696969',
-                    'marker': 's', 'markersize': 6,
-                    'linestyle': 'solid', 'linewidth': 1.5},
-            'metfra': {'color': '#00dc00',
-                      'marker': 'P', 'markersize': 7,
-                      'linestyle': 'solid', 'linewidth': 1.5},
-            'ukmet': {'color': '#e69f00',
-                      'marker': 'o', 'markersize': 7,
-                      'linestyle': 'solid', 'linewidth': 1.5},
         }
         return model_plot_settings_dict
-
-    def get_forecast_hour_plot_settings(self):
-        """! Get dictionary plot settings for forecast hours
-
-             Args:
-
-             Returns:
-                 forecast_hour_plot_settings_dict - dictionary of
-                                                    forecast hours
-                                                    plotting specifications
-                                                    (strings)
-        """
-        forecast_hour_plot_settings_dict = {
-            'fhr_n1': {'color': '#fb2020',
-                       'marker': 'o', 'markersize': 6,
-                       'linestyle': 'solid', 'linewidth': 1.5},
-            'fhr_n2': {'color': '#00dc00',
-                       'marker': '^', 'markersize': 7,
-                       'linestyle': 'solid', 'linewidth': 1.5},
-            'fhr_n3': {'color': '#1e3cff',
-                       'marker': 'X', 'markersize': 7,
-                       'linestyle': 'solid', 'linewidth': 1.5},
-            'fhr_n4': {'color': '#e69f00',
-                       'marker': 'o', 'markersize': 7,
-                       'linestyle': 'solid', 'linewidth': 1.5},
-            'fhr024': {'color': '#fb2020',
-                       'marker': 'o', 'markersize': 6,
-                       'linestyle': 'solid', 'linewidth': 1.5},
-            'fhr048': {'color': '#00dc00',
-                       'marker': '^', 'markersize': 7,
-                       'linestyle': 'solid', 'linewidth': 1.5},
-            'fhr072': {'color': '#1e3cff',
-                       'marker': 'X', 'markersize': 7,
-                       'linestyle': 'solid', 'linewidth': 1.5},
-            'fhr120': {'color': '#000000',
-                       'marker': 's', 'markersize': 6,
-                       'linestyle': 'solid', 'linewidth': 1.5},
-            'fhr240': {'color': '#e69f00',
-                       'marker': 'o', 'markersize': 7,
-                       'linestyle': 'solid', 'linewidth': 1.5},
-        }
-        return forecast_hour_plot_settings_dict
