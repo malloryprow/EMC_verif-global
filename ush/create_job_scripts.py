@@ -96,6 +96,10 @@ def create_job_scripts_step1(start_date_dt, end_date_dt, case, case_abbrev,
                 ].replace('self', model)
                 job_env_dict['obtype'] = obtype
             elif case == 'grid2obs':
+                job_env_dict['include_init_hr'] = (
+                    '"%H:'
+                    +job_env_dict['init_hr_list'].replace(" ", "")+'"'
+                )
                 if case_type == 'upper_air':
                     obtype = 'gdas'
                 elif case_type == 'conus_sfc':
