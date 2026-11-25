@@ -181,7 +181,7 @@ base_plot_jobs_info_dict = {
                                     'GRB', 'LMV', 'GMC', 'APL', 'NAK', 'SAK'],
                             'fcst_var_dict': {'name': 'CEILING',
                                       'levels': ['L0']},
-                             'obs_var_dict': {'name': 'HGT',
+                             'obs_var_dict': {'name': 'CEILING',
                                      'levels': ['L0']},
                              'obs_name': 'ADPSFC'},
         'HPBL': {'vx_masks': ['G104','WEST', 'EAST', 'MDW', 'NPL', 'SPL', 'NEC',
@@ -246,6 +246,8 @@ for pres_levs_job in list(condense_stats_jobs_dict['grid2obs_upper_air'].keys())
 for sfc_job in list(condense_stats_jobs_dict['grid2obs_conus_sfc'].keys()):
     if sfc_job == 'UGRD_VGRD10m':
         sfc_job_line_types = ['VL1L2']
+    elif sfc_job in ['HGTcldceil', 'VISsfc']:
+        sfc_job_line_types = ['SL1L2', 'CTC']
     else:
         sfc_job_line_types = ['SL1L2']
     condense_stats_jobs_dict['grid2obs_conus_sfc'][sfc_job]['line_types'] = sfc_job_line_types
@@ -283,6 +285,32 @@ for sfc_job in list(filter_stats_jobs_dict['grid2obs_conus_sfc'].keys()):
     filter_stats_jobs_dict['grid2obs_conus_sfc'][sfc_job]['obs_var_dict']['threshs'] = (
         sfc_job_obs_threshs
     )
+    if sfc_job in ['HGTcldceil', 'VISsfc']:
+        filter_stats_jobs_dict['grid2obs_conus_sfc'][sfc_job]['line_types'] = ['SL1L2']
+        filter_stats_jobs_dict['grid2obs_conus_sfc'][f"{sfc_job}_Thresh"] = copy.deepcopy(
+            filter_stats_jobs_dict['grid2obs_conus_sfc'][sfc_job]
+        )
+        filter_stats_jobs_dict['grid2obs_conus_sfc'][f"{sfc_job}_Thresh"]['line_types'] = [
+            'CTC'
+        ]
+        if sfc_job == 'HGTcldceil':
+            (filter_stats_jobs_dict['grid2obs_conus_sfc'][f"{sfc_job}_Thresh"]\
+             ['fcst_var_dict']['threshs']) = [
+                 'lt152', 'lt305', 'lt914', 'ge914', 'lt1524', 'lt3048'
+             ]
+            (filter_stats_jobs_dict['grid2obs_conus_sfc'][f"{sfc_job}_Thresh"]\
+             ['obs_var_dict']['threshs']) = [
+                 'lt152', 'lt305', 'lt914', 'ge914', 'lt1524', 'lt3048'
+             ]
+        elif sfc_job == 'VISsfc':
+            (filter_stats_jobs_dict['grid2obs_conus_sfc'][f"{sfc_job}_Thresh"]\
+             ['fcst_var_dict']['threshs']) = [
+                 'lt1609', 'lt4828', 'lt8045', 'ge8045',  'lt16090'
+             ]
+            (filter_stats_jobs_dict['grid2obs_conus_sfc'][f"{sfc_job}_Thresh"]\
+             ['obs_var_dict']['threshs']) = [
+                 'lt1609', 'lt4828', 'lt8045', 'ge8045',  'lt16090'
+             ]
 #### polar_sfc
 for psfc_job in list(filter_stats_jobs_dict['grid2obs_polar_sfc'].keys()):
     (filter_stats_jobs_dict['grid2obs_polar_sfc'][psfc_job]\
@@ -335,23 +363,31 @@ for sfc_job in list(make_plots_jobs_dict['grid2obs_conus_sfc'].keys()):
         sfc_job_line_type = 'VL1L2'
     else:
         sfc_job_line_type = 'SL1L2'
-    make_plots_jobs_dict['grid2obs_conus_sfc'][sfc_job]['line_type_stats'] = [
-        f"{sfc_job_line_type}/{s.upper()}" \
-        for s in sfc_stats
-    ]
-    make_plots_jobs_dict['grid2obs_conus_sfc'][sfc_job]['plots'] = [
-        'time_series','lead_average'
-    ]
-    if sfc_job_line_type == "SL1L2" and \
-            "fbar_obar" in os.environ["g2o2_conus_sfc_stats_list"]:
-        make_plots_jobs_dict['grid2obs_conus_sfc'][sfc_job+'_FBAR_OBAR'] = copy.deepcopy(
-            make_plots_jobs_dict['grid2obs_conus_sfc'][sfc_job]
-        )
-        make_plots_jobs_dict['grid2obs_conus_sfc'][sfc_job+'_FBAR_OBAR']['line_type_stats']=[
-            'SL1L2/FBAR_OBAR'
+    if 'Thresh' not in sfc_job:
+        make_plots_jobs_dict['grid2obs_conus_sfc'][sfc_job]['line_type_stats'] = [
+            f"{sfc_job_line_type}/{s.upper()}" \
+            for s in sfc_stats
         ]
-        make_plots_jobs_dict['grid2obs_conus_sfc'][sfc_job+'_FBAR_OBAR']['plots'] = [
-            'time_series'
+        make_plots_jobs_dict['grid2obs_conus_sfc'][sfc_job]['plots'] = [
+            'time_series','lead_average'
+        ]
+        if sfc_job_line_type == "SL1L2" and \
+                "fbar_obar" in os.environ["g2o2_conus_sfc_stats_list"]:
+            make_plots_jobs_dict['grid2obs_conus_sfc'][sfc_job+'_FBAR_OBAR'] = copy.deepcopy(
+                make_plots_jobs_dict['grid2obs_conus_sfc'][sfc_job]
+            )
+            make_plots_jobs_dict['grid2obs_conus_sfc'][sfc_job+'_FBAR_OBAR']['line_type_stats']=[
+                'SL1L2/FBAR_OBAR'
+            ]
+            make_plots_jobs_dict['grid2obs_conus_sfc'][sfc_job+'_FBAR_OBAR']['plots'] = [
+                'time_series'
+            ]
+    else:
+        make_plots_jobs_dict['grid2obs_conus_sfc'][sfc_job]['line_type_stats'] = [
+            'CTC/FBIAS', 'CTC/CSI'
+        ]
+        make_plots_jobs_dict['grid2obs_conus_sfc'][sfc_job]['plots'] = [
+            'time_series','lead_average'
         ]
 #### polar_sfc
 psfc_stats = os.environ["g2o2_polar_sfc_stats_list"].split(' ')

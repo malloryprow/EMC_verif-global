@@ -152,7 +152,9 @@ class PlotSpecs:
                                   (string)
         """
         stat_plot_name_dict = {
+            'CSI': 'Critical Success Index',
             'FBAR_OBAR': 'Forecast and Observation Mean',
+            'FBIAS': 'Frequency Bias',
             'ME': 'Mean Error (Bias) [Fcst-Obs]',
             'RMSE': 'Root Mean Square Error',
         }

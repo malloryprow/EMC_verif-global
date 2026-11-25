@@ -476,6 +476,7 @@ def initialize_job_env_dict(case_type, group,
     job_env_dict = {}
     for env_var in job_env_var_list:
         job_env_dict[env_var] = os.environ[env_var]
+    job_env_dict['PYTHONPATH'] = "${PYTHONPATH}:${USHverif_global}"
     if group in ['condense_stats', 'filter_stats', 'scorecard_avg_ci', 'make_plots']:
         job_env_dict['plot_verbosity'] = 'DEBUG'
     job_env_dict['CASE_TYPE'] = case_type
